@@ -116,7 +116,7 @@ namespace Project.BLL.DesignPatterns.GenericRepository.BaseRep
             return _db.Set<T>().Select(exp).ToList();
         }
 
-        public IQueryable<x> Select<x>(Expression<Func<T, x>> exp) where x : BaseEntityDTO
+        public IQueryable<x> Select<x>(Expression<Func<T, x>> exp)
         {
             return _db.Set<T>().Select(exp);
         }

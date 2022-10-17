@@ -38,7 +38,7 @@ namespace Project.BLL.DesignPatterns.GenericRepository.IntRep
         bool Any(Expression<Func<T, bool>> exp);
         T FirstOrDefault(Expression<Func<T, bool>> exp);
         object Select(Expression<Func<T, object>> exp);
-        IQueryable<x> Select<x>(Expression<Func<T, x>> exp) where x : BaseEntityDTO;
+        IQueryable<x> Select<x>(Expression<Func<T, x>> exp);
         IQueryable<BaseEntityDTO> SelectByDTO(Expression<Func<T, BaseEntityDTO>> exp);
 
         //Find Command
