@@ -1,0 +1,87 @@
+﻿@model AppUserVM
+@{
+    Layout = null;
+}
+
+<style>
+    .field-validation-error {
+        color: red;
+    }
+</style>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Mosaddek">
+    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <link rel="shortcut icon" href="img/favicon.png">
+
+    <title>FlatLab - Flat & Responsive Bootstrap Admin Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/OuterTools/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/OuterTools/css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="~/OuterTools/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="~/OuterTools/css/style.css" rel="stylesheet">
+    <link href="~/OuterTools/css/style-responsive.css" rel="stylesheet" />
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="login-body">
+
+    <div class="container">
+
+        <h2>@ViewBag.ZatenVar</h2>
+
+        @using (Html.BeginForm("RegisterNow", "Register", FormMethod.Post, new { @class = "form-signin" }))
+        {
+            <br />
+            <center> <h2>Üye Olunuz</h2> </center>
+
+            <div class="login-wrap">
+
+                @Html.TextBoxFor(x => x.AppUser.UserName, new { @class = "form-control", placeholder = "Kullanıcı ismi giriniz" })
+                @Html.ValidationMessageFor(x => x.AppUser.UserName)
+
+                @Html.TextBoxFor(x => x.AppUser.Password, new { @class = "form-control", placeholder = "Şifre giriiniz" })
+                @Html.ValidationMessageFor(x => x.AppUser.Password)
+
+                @Html.TextBoxFor(x => x.AppUser.Email, new { @class = "form-control", placeholder = "Email adresinizi giriniz"})
+                @Html.ValidationMessageFor(x => x.AppUser.Email)
+
+                @Html.TextBoxFor(x => x.AppUserProfile.FirstName, new { @class = "form-control", placeholder = "İsim"})
+                @Html.ValidationMessageFor(x => x.AppUserProfile.FirstName)
+
+                @Html.TextBoxFor(x => x.AppUserProfile.LastName, new { @class = "form-control", placeholder = "Soyisim"})
+                @Html.ValidationMessageFor(x => x.AppUserProfile.LastName)
+
+            </div>
+
+            <br />
+
+            <button class="btn btn-primary"> Üye Ol </button>
+
+            <br />
+            @Html.ActionLink("Giriş Yap", "Login", "Home")
+        }
+
+    </div>
+
+    <script src="~/OuterTools/js/jquery-1.8.3.min.js"></script>
+    <script src="~/OuterTools/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+</body>
+</html>
