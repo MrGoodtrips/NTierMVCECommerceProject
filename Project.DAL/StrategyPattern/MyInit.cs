@@ -20,7 +20,7 @@ namespace Project.DAL.StrategyPattern
 
             AppUser au = new AppUser();
             au.UserName = "admin";
-            au.Password = DemonCrypt.Crypt("admin");
+            au.Password = DantexCrypt.Crypt("admin");
             au.Email = "serhatozturk.mr.goodtrips@gmail.com";
             au.Role = ENTITIES.Enums.UserRole.Admin;
             context.AppUsers.Add(au);
