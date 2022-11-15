@@ -1,12 +1,12 @@
 ﻿@model CategoryVM
 @{
-    ViewBag.Title = "CategoryList";
+    ViewBag.Title = "GetAllCategories";
 }
 
 <!-- page start-->
 <section class="panel">
     <header class="panel-heading">
-        @Html.ActionLink("Tüm kategorileri listele", "GetAllCategories")
+        @Html.ActionLink("Aktif Kategorileri listele", "CategoryList")
     </header>
     <div class="panel-body">
         <div class="adv-table">
@@ -18,11 +18,11 @@
                         <th class="hidden-phone">Açıklama</th>
                         <th class="hidden-phone">Veri Durumu</th>
                         <th class="hidden-phone">Güncelle</th>
-                        <th class="hidden-phone">Sil</th>
+                        <th class="hidden-phone">Yok Et</th>
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                     @foreach (Category item in Model.Categories)
                     {
                         <tr class="gradeX">
@@ -32,8 +32,8 @@
                             <td class="hidden-phone">@item.Description</td>
                             <td class="center hidden-phone">@item.Status</td>
                             <td class="center hidden-phone">@Html.ActionLink("Güncelle", "UpdateCategory", new { id = item.ID }, new { @class = "btn btn-warning" })</td>
-                            <td class="center hidden-phone">@Html.ActionLink("Sil", "DeleteCategory", new { id = item.ID }, new { @class = "btn btn-danger" })</td>
-                            
+                            <td class="center hidden-phone">@Html.ActionLink("Yok Et", "DestroyCategory", new { id = item.ID }, new { @class = "btn btn-danger" })</td>
+
                         </tr>
                     }
 
@@ -45,3 +45,4 @@
 </section>
 <!-- page end-->
 <script src="~/Areas/Admin/AdminScripts/AdminCategoryDTJ.js"></script>
+

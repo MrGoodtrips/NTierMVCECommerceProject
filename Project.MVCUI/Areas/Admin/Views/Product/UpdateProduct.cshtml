@@ -1,0 +1,112 @@
+﻿@model ProductVM
+@{
+    ViewBag.Title = "UpdateProduct";
+}
+
+<style>
+    .genislik {
+        width: 300px;
+    }
+</style>
+
+<style>
+    .field-validation-error {
+        color: red;
+    }
+</style>
+
+@using (Html.BeginForm("UpdateProduct", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(x => x.Product.ID)
+
+    @Html.HiddenFor(x => x.Product.ImagePath)
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <section class="panel">
+
+                <header class="panel-heading">
+                    Ürün Güncelleme Sayfası
+                </header>
+
+                <div class="panel-body">
+
+                    <div class="form-group">
+
+                        <label class="col-sm-2"> Ürün İsmi </label>
+                        <div class="col-sm-10">
+
+                            @Html.TextBoxFor(x => x.Product.ProductName, new { @class = "form-control genislik", placeholder = "Ürün İsmi" })
+
+                            @Html.ValidationMessageFor(x => x.Product.ProductName)
+
+                        </div>
+
+                        <br /> <br />
+
+                        <label class="col-sm-2"> Birim Fiyat </label>
+                        <div class="col-sm-10">
+
+                            @Html.TextBoxFor(x => x.Product.UnitPrice, new { @class = "form-control genislik", placeholder = "Birim Fiyat" })
+
+                            @Html.ValidationMessageFor(x => x.Product.UnitPrice)
+
+                        </div>
+
+                        <br /> <br />
+
+                        <label class="col-sm-2"> Stokataki Ürün Sayısı </label>
+                        <div class="col-sm-10">
+
+                            @Html.TextBoxFor(x => x.Product.UnitsInStock, new { @class = "form-control genislik", placeholder = "Stokataki Ürün Sayısı" })
+
+                            @Html.ValidationMessageFor(x => x.Product.UnitsInStock)
+
+                        </div>
+
+                        <br /> <br />
+
+                        <label class="col-sm-2"> Kategori </label>
+                        <div class="col-sm-10">
+
+                            @Html.DropDownListFor(x => x.Product.CategoryID, new SelectList(Model.Categories, "ID", "CategoryName"), "Lütfen Seçinizi", new { @class = "form-control genislik" })
+
+                        </div>
+
+                        <br /> <br />
+
+                        <label class="col-sm-2"> Resim Seçiniz </label>
+                        <div class="col-sm-10">
+
+                            @if (!string.IsNullOrEmpty(Model.Product.ImagePath))
+                            {
+                                @Html.CheckBox("Remember")
+                            <label for="wehicle1">Resim kalsın</label>
+                            <br />
+                            <img src="@Model.Product.ImagePath" title="@Model.Product.ProductName" width="30" height="30" />
+                            }
+
+                            <input type="file" name="image" class="form-control genislik" />
+
+                        </div>
+
+                        <br /> <br />
+
+                        <label class="col-sm-2">  </label>
+                        <div class="col-sm-10">
+
+                            <button class="btn btn-warning genislik"> Güncelle</button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+    </div>
+}
+
