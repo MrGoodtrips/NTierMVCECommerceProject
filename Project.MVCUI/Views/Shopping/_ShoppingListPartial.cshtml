@@ -1,0 +1,83 @@
+﻿@model PaginationVM
+
+<section class="panel">
+
+    <div class="panel-body">
+
+        <div class="row product-list">
+
+            @foreach (Product item in Model.PagedProducts)
+            {
+                <div class="col-md-4">
+
+                    <section class="panel">
+                        <div class="pro-img-box">
+
+                            @if (item.ImagePath == null || item.ImagePath == "3" || item.ImagePath.Contains("night"))
+                            {
+                                <img src="~/OuterTools/img/product-list/pro1.jpg" alt="Resim yok" title="@item.ProductName" />
+                            }
+                            else
+                            {
+                                <img src="@item.ImagePath" alt="" title="@item.ProductName" />
+                            }
+
+                            <a href="@Url.Action("AddToCart", new { id = item.ID })" class="adtocart">
+                                <i class="icon-shopping-cart"></i>
+                            </a>
+                        </div>
+
+                        <div class="panel-body text-center">
+                            <h4>
+                                <a href="#" class="pro-title" title="@item.ProductName">
+                                    @item.ProductName |
+                                    @if (item.Category != null)
+                                    {<span>@item.Category.CategoryName</span>}
+                                    else
+                                    { <span>Kategorisi yok</span>}
+                                </a>
+                            </h4>
+                            <p class="price">@item.UnitPrice ₺</p>
+                        </div>
+                    </section>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="panel">
+
+    <div class="panel-body">
+        <div class="pull-right">
+            <ul class="pagination pagination-sm pro-page-list">
+
+                @if (TempData["catID"] != null)
+                {
+                    <li> @Html.PagedListPager(Model.PagedProducts, page => Url.Action("PartialShoppingList", new { page, CategoryID = TempData["catID"] }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result" })) </li>
+                }
+                else if (TempData["sortOrder"] != null)
+                {
+                    <li> @Html.PagedListPager(Model.PagedProducts, page => Url.Action("PartialShoppingList", new { page, sortOrder = TempData["sortOrder"] }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result" })) </li>
+                }
+                else if (TempData["catID"] != null && TempData["sortOrder"] != null)
+                {
+                    <li> @Html.PagedListPager(Model.PagedProducts, page => Url.Action("PartialShoppingList", new { page, categoryID = TempData["catID"], sortOrder = TempData["sortOrder"] }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result" })) </li>
+                }
+                else
+                {
+                    <li> @Html.PagedListPager(Model.PagedProducts, page => Url.Action("PartialShoppingList", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "result" })) </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+</section>
+
+
+
+

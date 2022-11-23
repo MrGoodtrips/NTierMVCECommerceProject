@@ -1,0 +1,92 @@
+﻿@model OrderVM
+@{
+    ViewBag.Title = "SiparisiOnayla";
+}
+
+<style>
+    .field-validation-error {
+        color: red;
+    }
+</style>
+
+<div>
+
+    @using (Html.BeginForm())
+    {
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Kart Üzerindeki İsim</label>
+            <div class="col-sm-10">
+                @Html.TextAreaFor(x => x.PaymentDTO.CardUserName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.PaymentDTO.CardUserName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Gönderim Adresi</label>
+            <div class="col-sm-10">
+                @Html.TextAreaFor(x => x.Order.ShippedAddress, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Order.ShippedAddress)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Kart Numarası</label>
+            <div class="col-sm-10">
+                @Html.TextAreaFor(x => x.PaymentDTO.CardNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.PaymentDTO.CardNumber)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Kart Güvenlik Numarası</label>
+            <div class="col-sm-10">
+                @Html.TextAreaFor(x => x.PaymentDTO.SecurityNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.PaymentDTO.SecurityNumber)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Geçerlilik Süresi Ay</label>
+            <div class="col-sm-10">
+                @Html.TextAreaFor(x => x.PaymentDTO.CardExpiryMonth, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.PaymentDTO.CardExpiryMonth)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Geçerlilik Süresi Yıl</label>
+            <div class="col-sm-10">
+                @Html.TextAreaFor(x => x.PaymentDTO.CardExpiryYear, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.PaymentDTO.CardExpiryYear)
+            </div>
+        </div>
+
+        if (Session["member"] == null)
+        {
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Email</label>
+                <div class="col-sm-10">
+                    @Html.TextAreaFor(x => x.Order.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.Order.Email)
+                </div>
+            </div>
+        }
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Onay</label>
+            <div class="col-sm-10">
+                <button class="btn btn-primary">Onay</button>
+            </div>
+        </div>
+
+    }
+
+</div>
+
+@section Member {
+    @if (Session["member"] != null)
+    {
+        <span class="username">@((Session["member"] as AppUser).UserName)</span>
+    }
+
+}

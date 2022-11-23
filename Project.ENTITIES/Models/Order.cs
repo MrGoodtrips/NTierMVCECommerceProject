@@ -15,6 +15,7 @@ namespace Project.ENTITIES.Models
 
         [Required(ErrorMessage = "{0} alanı boş bırakılamaz")]
         [Display(Name = "Email Adresi")]
+        [EmailAddress(ErrorMessage ="{0} alanı Email formatında olmalıdır")]
         public string Email { get; set; }
 
         [Display(Name = "Kullanıcı Adı")]
@@ -22,7 +23,7 @@ namespace Project.ENTITIES.Models
 
         [Display(Name = "Toplam Fiyat")]
         public decimal TotalPrice { get; set; }//Sipariş işlemlerinin icerisindeki bilgileri daha rahat yakalamak adına actıgımız property'lerden bir tanesi TotalPrice'dir...
-        public int AppUserID { get; set; }
+        public int? AppUserID { get; set; }
 
         //Relational Properties
 

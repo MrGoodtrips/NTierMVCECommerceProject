@@ -3,14 +3,21 @@
     ViewBag.Title = "ShoppingList";
 }
 
+@TempData["bos"]
+@TempData["sepetBos"]
+@TempData["baglantiRed"]
+@TempData["odeme"]
+@TempData["sorun"]
+
 <!-- page start-->
 <div class="row">
     <div class="col-md-3">
         <section class="panel">
             <div class="panel-body">
-                <input type="text" placeholder="Keyword Search" class="form-control">
+                <input type="text" id="txtSearch" placeholder="Keyword Search" class="form-control">
             </div>
         </section>
+
         <section class="panel">
             <header class="panel-heading">
                 Kategori
@@ -20,7 +27,7 @@
 
                     @foreach (Category item in Model.Categories)
                     {
-                        <li> @Html.ActionLink(item.CategoryName, "ShoppingList", new { categoryID = item.ID }, new { @class=" icon-angle-right" }) </li>
+                        <li> @Ajax.ActionLink(item.CategoryName, "PartialShoppingList", new { categoryID = item.ID }, new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "result" }, new { @class = " icon-angle-right" }) </li>
                     }
 
                 </ul>
@@ -74,86 +81,77 @@
             </div>
         </section>
     </div>
+
     <div class="col-md-9">
+
         <section class="panel">
             <div class="panel-body">
                 <div class="pro-sort">
-                    <label class="pro-lab">Sort By</label>
-                    <select class="styled">
-                        <option>Default Sorting</option>
-                        <option>Popularity</option>
-                        <option>Average Rating</option>
-                        <option>Newness</option>
-                        <option>Price Low to High</option>
-                        <option>Price High to Low</option>
+                    <label class="pro-lab">Fiyata göre sırala</label>
+                    <select id="select" class="styled">
+                        <option>Default</option>
+                        <option>Artan</option>
+                        <option>Azalan</option>
                     </select>
-                </div>
-                @*<div class="pro-sort">
-                    <label class="pro-lab">Show</label>
-                    <select class="styled">
-                        <option>Result Per Page</option>
-                        <option>2 Per Page</option>
-                        <option>4 Per Page</option>
-                        <option>6 Per Page</option>
-                        <option>8 Per Page</option>
-                        <option>10 Per Page</option>
-                    </select>
-                </div>*@
-
-                <div class="pull-right">
-                    <ul class="pagination pagination-sm pro-page-list">
-
-                        @if (TempData["catID"] != null)
-                        {
-                            <li> @Html.PagedListPager(Model.PagedProducts, page => Url.Action("ShoppingList", new { page, CategoryID = TempData["catID"] })) </li>
-                        }
-                        else
-                        {
-                            <li> @Html.PagedListPager(Model.PagedProducts, page => Url.Action("ShoppingList", new { page })) </li>
-                        }
-
-                    </ul>
                 </div>
             </div>
         </section>
 
-        <div class="row product-list">
+        <section class="panel">
+            <div id="result" class="panel-body">
+                @Html.Partial("_ShoppingListPartial")
+            </div>
+        </section>
 
-            @foreach (Product item in Model.PagedProducts)
-            {
-                <div class="col-md-4">
-
-                    <section class="panel">
-                        <div class="pro-img-box">
-
-                            @if (item.ImagePath == null || item.ImagePath == "3" || item.ImagePath.Contains("night"))
-                            {
-                                <img src="~/Pictures/Sekiro.jpg" alt="" title="@item.ProductName" />
-                            }
-                            else
-                            {
-                                <img src="@item.ImagePath" alt="" title="@item.ProductName" />
-                            }
-
-                            <a href="#" class="adtocart">
-                                <i class="icon-shopping-cart"></i>
-                            </a>
-                        </div>
-
-                        <div class="panel-body text-center">
-                            <h4>
-                                <a href="#" class="pro-title">
-                                    @item.ProductName
-                                </a>
-                            </h4>
-                            <p class="price">@item.UnitPrice₺</p>
-                        </div>
-                    </section>
-
-                </div>
-            }
-
-        </div>
     </div>
+
 </div>
 <!-- page end-->
+
+<script>
+
+    $(document).ready(function () {
+        $("#txtSearch").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $.get("/Shopping/PartialShoppingList?search=" + value, function (r) {
+                $("#result").html(r);
+            });
+        });
+    });
+
+</script>
+
+<script>
+
+    $(document).ready(function () {
+        $("#select").on("change", function () {
+            var value = $(this).val().toLowerCase();
+            $.get("/Shopping/PartialShoppingList?sortOrder=" + value, function (r) {
+                $("#result").html(r);
+            });
+        });
+    });
+
+</script>
+
+@section Sepet {
+    <li>
+        <a href="@Url.Action("CartPage","Shopping")">
+            <i class="icon-shopping-cart"></i>Sepet
+            @if (Session["scart"] != null)
+            {
+                <span class="alert-info">@((Session["scart"] as Cart).Sepetim.Count)</span>
+            }
+        </a>
+    </li>
+}
+
+@section Member {
+    @if (Session["member"] != null)
+    {
+        <span class="username">@((Session["member"] as AppUser).UserName)</span>
+    }
+
+}
+
+
